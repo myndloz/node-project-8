@@ -14,7 +14,7 @@ pipeline {
                         def packageJson = readJSON file: 'package.json'
                         def version = packageJson.version
 
-                        # set the new version as part of IMAGE_NAME
+                        // # set the new version as part of IMAGE_NAME
                         env.IMAGE_NAME = "$version-$BUILD_NUMBER"
                     }
 				}
@@ -52,7 +52,7 @@ pipeline {
 				script {
 					echo "Commit version update to Git repo"
 					withCredentials([usernamePassword(credentialsID: 'smyndloh-GitHub', usernameVariable: 'USER', passwordVariable: 'PWD')]) {
-					    sh 'git config --global user.email "greatzlab@gmail.com"'
+						sh 'git config --global user.email "greatzlab@gmail.com"'
                         sh 'git config --global user.name "smyndlo"'
 
                         sh "git remote set-url origin git@github.com:theMartianLabs/node-project-8.git"
