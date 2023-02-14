@@ -34,19 +34,20 @@ pipeline {
 
 		}
 
-	// 	stage("Build & Push Docker Image") {
-	// 		steps {
-	// 			script {
-	// 				echo "Building image..."
-	// 				withCredentials([usernamePassword(credentialsID: 'smyndloh-DockerHub', usernameVariable: 'USER', passwordVariable: 'PWD')]) {
-	// 					sh "docker build -t smyndloh/containerz:${IMAGE_NAME} ."
-	// 					sh "echo ${PWD} | docker login -u ${USER} --password-stdin"
-	// 					sh "docker push smyndloh/containerz:${IMAGE_NAME}"
-	// 				}
-	// 			}
+		stage("Build & Push Docker Image") {
+			steps {
+				script {
+					echo "Building image..."
+					withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'smyndloh-DockerHub',
+					usernameVariable: 'USER', passwordVariable: 'PWD']]) {
+						sh "docker build -t smyndloh/containerz:${IMAGE_NAME} ."
+						sh "echo ${PWD} | docker login -u ${USER} --password-stdin"
+						sh "docker push smyndloh/containerz:${IMAGE_NAME}"
+					}
+				}
 			
-	// 		}
-	// 	}
+			}
+		}
 
 	// 	stage("Commit version update") {
 	// 		steps {
