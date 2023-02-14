@@ -60,6 +60,7 @@ pipeline {
 						sh 'git config --global user.email "greatzlab@gmail.com"'
                         sh 'git config --global user.name "smyndlo"'
                         sh "git remote set-url origin git@github.com:theMartianLabs/node-project-8.git"
+						sh 'git checkout jenkins-jobs'
                         sh 'git add .'
                         sh 'git commit -m "ci: version bump"'
                         sh 'git push origin jenkins-jobs'
