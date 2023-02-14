@@ -62,7 +62,7 @@ pipeline {
                         sh "git remote set-url origin git@github.com:theMartianLabs/node-project-8.git"
                         sh 'git add .'
                         sh 'git commit -m "ci: version bump"'
-                        sh 'git push origin main'
+                        sh 'git push origin jenkins-jobs'
 					}
 
 				}			
