@@ -16,7 +16,7 @@ pipeline {
 						sh "echo $packageJson.version"
                         def version = packageJson.version
 
-                        # set the new version as part of IMAGE_NAME
+                        //set the new version as part of IMAGE_NAME
                         env.IMAGE_NAME = "$version-$BUILD_NUMBER"
                     }
 				}
