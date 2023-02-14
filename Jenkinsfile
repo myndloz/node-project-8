@@ -10,14 +10,14 @@ pipeline {
 				script {
 					echo "Building application..."
 					dir("app") {
-                        npm version minor
+                        sh "npm version minor"
 
                         def packageJson = readJSON file: 'package.json'
 						sh "echo $packageJson.version"
-                        // def version = packageJson.version
+                        def version = packageJson.version
 
-                        // # set the new version as part of IMAGE_NAME
-                        // env.IMAGE_NAME = "$version-$BUILD_NUMBER"
+                        # set the new version as part of IMAGE_NAME
+                        env.IMAGE_NAME = "$version-$BUILD_NUMBER"
                     }
 				}
 			}
@@ -39,36 +39,35 @@ pipeline {
 			steps {
 				script {
 					echo "Building image..."
-					env.VERSION = "1.5.1"
-					env.IMAGE_NAME = "$VERSION-$BUILD_NUMBER"
+					// env.VERSION = "1.5.1"
+					// env.IMAGE_NAME = "$VERSION-$BUILD_NUMBER"
 					withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'smyndloh-DockerHub',
 					usernameVariable: 'USER', passwordVariable: 'PWD']]) {
 						sh "docker build -t smyndloh/containerz:${IMAGE_NAME} ."
 						sh "echo ${PWD} | docker login -u ${USER} --password-stdin"
 						sh "docker push smyndloh/containerz:${IMAGE_NAME}"
 					}
-				}
-			
+				}			
 			}
 		}
 
-		// stage("Commit version update") {
-		// 	steps {
-		// 		script {
-		// 			echo "Commit version update to Git repo"
-		// 			withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'smyndloh-GitHub',
-		// 			usernameVariable: 'USER', passwordVariable: 'PWD']]) {
-		// 				sh 'git config --global user.email "greatzlab@gmail.com"'
-        //                 sh 'git config --global user.name "smyndlo"'
-        //                 sh "git remote set-url origin git@github.com:theMartianLabs/node-project-8.git"
-        //                 sh 'git add .'
-        //                 sh 'git commit -m "ci: version bump"'
-        //                 sh 'git push origin main'
-		// 			}
+		stage("Commit version update") {
+			steps {
+				script {
+					echo "Commit version update to Git repo"
+					withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'smyndloh-GitHub',
+					usernameVariable: 'USER', passwordVariable: 'PWD']]) {
+						sh 'git config --global user.email "greatzlab@gmail.com"'
+                        sh 'git config --global user.name "smyndlo"'
+                        sh "git remote set-url origin git@github.com:theMartianLabs/node-project-8.git"
+                        sh 'git add .'
+                        sh 'git commit -m "ci: version bump"'
+                        sh 'git push origin main'
+					}
 
-		// 		}			
-		// 	}		
-		// }
+				}			
+			}		
+		}
 
 	}			
 }
