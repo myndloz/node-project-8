@@ -22,53 +22,59 @@ pipeline {
 			}
 		}
 
-		stage("Run tests") {
-		    steps {
-		        script {
-		            dir("app") {
-		                sh "npm install"
-		                sh "npm run test"
-		            }
-		        }
-		    }
+		// stage("Run tests") {
+		//     steps {
+		//         script {
+		//             dir("app") {
+		//                 sh "npm install"
+		//                 sh "npm run test"
+		//             }
+		//         }
+		//     }
 
-		}
+		// }
 
-		stage("Build & Push Docker Image") {
-			steps {
-				script {
-					echo "Building image..."
-					withCredentials([usernamePassword(credentialsID: 'smyndloh-DockerHub', usernameVariable: 'USER', passwordVariable: 'PWD')]) {
-						sh "docker build -t smyndloh/containerz:${IMAGE_NAME} ."
-						sh "echo ${PWD} | docker login -u ${USER} --password-stdin"
-						sh "docker push smyndloh/containerz:${IMAGE_NAME}"
-					}
-				}
+	// 	stage("Build & Push Docker Image") {
+	// 		steps {
+	// 			script {
+	// 				echo "Building image..."
+	// 				withCredentials([usernamePassword(credentialsID: 'smyndloh-DockerHub', usernameVariable: 'USER', passwordVariable: 'PWD')]) {
+	// 					sh "docker build -t smyndloh/containerz:${IMAGE_NAME} ."
+	// 					sh "echo ${PWD} | docker login -u ${USER} --password-stdin"
+	// 					sh "docker push smyndloh/containerz:${IMAGE_NAME}"
+	// 				}
+	// 			}
 			
-			}
-		}
+	// 		}
+	// 	}
 
-		stage("Commit version update") {
-			steps {
-				script {
-					echo "Commit version update to Git repo"
-					withCredentials([usernamePassword(credentialsID: 'smyndloh-GitHub', usernameVariable: 'USER', passwordVariable: 'PWD')]) {
-						sh 'git config --global user.email "greatzlab@gmail.com"'
-                        sh 'git config --global user.name "smyndlo"'
+	// 	stage("Commit version update") {
+	// 		steps {
+	// 			script {
+	// 				echo "Commit version update to Git repo"
+	// 				withCredentials([usernamePassword(credentialsID: 'smyndloh-GitHub', usernameVariable: 'USER', passwordVariable: 'PWD')]) {
+	// 					sh 'git config --global user.email "greatzlab@gmail.com"'
+    //                     sh 'git config --global user.name "smyndlo"'
 
-                        sh "git remote set-url origin git@github.com:theMartianLabs/node-project-8.git"
-                        sh 'git add .'
-                        sh 'git commit -m "ci: version bump"'
-                        sh 'git push origin main'
-					}
+    //                     sh "git remote set-url origin git@github.com:theMartianLabs/node-project-8.git"
+    //                     sh 'git add .'
+    //                     sh 'git commit -m "ci: version bump"'
+    //                     sh 'git push origin main'
+	// 				}
 
-				}			
-			}		
-		}
+	// 			}			
+	// 		}		
+	// 	}
 
 	}			
 }
 
+
+
+
+
+
+//	------------------------------------------------------------------
 
 // def gv
 // pipeline {
