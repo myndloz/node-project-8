@@ -1,0 +1,26 @@
+// def buildApp() {
+//     echo "building the app..."
+//     dir("app") {
+//     # update application version in the package.json file with one of these release types: patch, minor or major
+//     # this will commit the version update
+//     npm version minor
+
+//     # read the updated version from the package.json file
+//     def packageJson = readJSON file: 'package.json'
+//     def version = packageJson.version
+
+//     # set the new version as part of IMAGE_NAME
+//     env.IMAGE_NAME = "$version-$BUILD_NUMBER"
+
+
+// }
+
+// def testApp() {
+//     echo "testing the app..."
+// }
+
+// def deployApp() {
+//     echo "deploying the app..."
+// }
+
+// return this
