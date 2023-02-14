@@ -5,34 +5,34 @@ pipeline {
 		nodejs "nodejs"
 	}
 	stages {
-		stage("increment version") {
-			steps {
-				script {
-					echo "Building application..."
-					dir("app") {
-                        npm version minor
+		// stage("increment version") {
+		// 	steps {
+		// 		script {
+		// 			echo "Building application..."
+		// 			dir("app") {
+        //                 npm version minor
 
-                        def packageJson = readJSON file: 'package.json'
-                        def version = packageJson.version
+        //                 def packageJson = readJSON file: 'package.json'
+        //                 def version = packageJson.version
 
-                        // # set the new version as part of IMAGE_NAME
-                        env.IMAGE_NAME = "$version-$BUILD_NUMBER"
-                    }
-				}
-			}
-		}
-
-		// stage("Run tests") {
-		//     steps {
-		//         script {
-		//             dir("app") {
-		//                 sh "npm install"
-		//                 sh "npm run test"
-		//             }
-		//         }
-		//     }
-
+        //                 // # set the new version as part of IMAGE_NAME
+        //                 env.IMAGE_NAME = "$version-$BUILD_NUMBER"
+        //             }
+		// 		}
+		// 	}
 		// }
+
+		stage("Run tests") {
+		    steps {
+		        script {
+		            dir("app") {
+		                sh "npm install"
+		                sh "npm run test"
+		            }
+		        }
+		    }
+
+		}
 
 	// 	stage("Build & Push Docker Image") {
 	// 		steps {
