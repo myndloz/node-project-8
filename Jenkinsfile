@@ -38,6 +38,8 @@ pipeline {
 			steps {
 				script {
 					echo "Building image..."
+					env.VERSION = "1.5.1"
+					env.IMAGE_NAME = "$VERSION-$BUILD_NUMBER"
 					withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'smyndloh-DockerHub',
 					usernameVariable: 'USER', passwordVariable: 'PWD']]) {
 						sh "docker build -t smyndloh/containerz:${IMAGE_NAME} ."
