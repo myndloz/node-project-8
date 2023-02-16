@@ -19,7 +19,7 @@ def testApp() {
 }
 
 def buildImage() {
-    echo "Building image..."
+    echo "Building image: ${IMAGE_NAME} ..."
     // env.VERSION = "1.5.1"
     // env.IMAGE_NAME = "$VERSION-$BUILD_NUMBER"
     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'smyndloh-DockerHub',
